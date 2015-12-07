@@ -1,0 +1,22 @@
+{
+  "name": "perf-monitor-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perf-site/perf-monitor-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/perf-site/perf-monitor-cli/issues"
+  },
+  "homepage": "https://github.com/perf-site/perf-monitor-cli#readme",
+  "dependencies": {
+    "chrome-remote-interface": "^0.11.0"
+  }
+}
