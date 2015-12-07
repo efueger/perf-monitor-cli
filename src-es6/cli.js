@@ -1,5 +1,10 @@
 import Chrome from 'chrome-remote-interface';
 import util from 'util';
+import bunyan from 'bunyan';
+
+const logger = bunyan.createLogger({
+  name: 'perf-monitor'
+});
 
 const options = {
   chooseTab(tabs) {
@@ -17,28 +22,28 @@ const options = {
     const matchingTab = tabs[indexToReturn];
 
     if (matchingTabs.length > 1) {
-      console.log(`More than one tab found, using the tab with url: ${matchingTab.url}`);
+      logger.log(`More than one tab found, using the tab with url: ${matchingTab.url}`);
     }
-    return indexToReturn;
-    }
+     return indexToReturn;
+  }
 };
 
-Chrome(options, function(chrome) {
-  chrome.Network.requestWillBeSent(function (params) {
-    console.log(util.inspect(params, { depth: null }));
-  });
-  chrome.Network.requestServedFromCache(function(requestId) {
-    console.log(`Served from cache: ${requestId}`);
-  });
-  chrome.Network.responseReceived(function(params) {
-    console.log(util.inspect(params, { depth: null }));
-  })
-  chrome.Network.setMonitoringXHREnabled(true);
+  Chrome(options, function(chrome) {
+    chrome.Network.requestWillBeSent(function (params) {
+      logger.log(util.inspect(params, { depth: null }));
+    });
+    chrome.Network.requestServedFromCache(function(requestId) {
+      logger.log(`Served from cache: ${requestId}`);
+    });
+    chrome.Network.responseReceived(function(params) {
+      logger.log(util.inspect(params, { depth: null }));
+    })
+    chrome.Network.setMonitoringXHREnabled(true);
 
-  //chrome.Page.loadEventFired(chrome.close);
-  chrome.Network.enable();
-  chrome.Page.enable();
+    //chrome.Page.loadEventFired(chrome.close);
+    chrome.Network.enable();
+    chrome.Page.enable();
 
-}).on('error', function() {
-  console.error('Cannot connect to Chrome');
-});
+  }).on('error', function() {
+    logger.error('Cannot connect to Chrome');
+  });
