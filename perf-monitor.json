@@ -1,0 +1,5 @@
+{
+	"remoteSiteBaseUrl": "perf.site",
+	"supportedBrowsers": ["Google Chrome", "Google Chrome Canary"],
+	"logsFolderPath": "./logs"
+}
