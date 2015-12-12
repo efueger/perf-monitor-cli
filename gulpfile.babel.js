@@ -1,23 +1,26 @@
 'use strict';
-import gulp  from 'gulp';
+
+import babelCompiler   from 'babel-core/register';
+import clear           from 'clear';
+import del             from 'del';
+import gulp            from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import PrettyError from 'pretty-error';
-import clear from 'clear';
-import del from 'del';
-import runSequence from 'run-sequence';
-import babelCompiler from 'babel-core/register';
-//import manifest  from './package.json';
-new PrettyError.start();
+import runSequence     from 'run-sequence';
+import PrettyError     from 'pretty-error';
+import { Instrumenter } from 'isparta';
+
+PrettyError.start();
 
 const {
   babel,
   eslint,
-  mocha
+  istanbul,
+  mocha,
 } = gulpLoadPlugins();
 
 const srcFilesPattern  = 'src-es6/**/*.js';
 const testFilesPattern = 'tests/**/*.js';
-const jsTargetFolder = 'src';
+const jsTargetFolder   = 'src';
 
 gulp.task('clean', () => del([jsTargetFolder]));
 
@@ -34,7 +37,7 @@ gulp.task('transpile', () => {
   .pipe(gulp.dest(jsTargetFolder));
 });
 
-gulp.task('test', () => {
+const testFn = () => {
   return gulp.src(testFilesPattern)
   .pipe(mocha({ 
     reporter: 'spec',
@@ -42,7 +45,9 @@ gulp.task('test', () => {
       js: babelCompiler
     },
   }));
-});
+};
+
+gulp.task('test', () => testFn());
 
 const runDevelopmentTasks = () => {
     return runSequence('clean', ['lint', 'transpile', 'test']);
@@ -57,3 +62,18 @@ gulp.task('dev', ['build'], () => {
   });
 });
 
+gulp.task('coverage', ['lint'], () => {
+  babelCompiler();
+  return gulp.src([srcFilesPattern])
+    .pipe(istanbul({
+      instrumenter: Instrumenter,
+	  includeUntested: true
+    }))
+    .pipe(istanbul.hookRequire())
+	.on('finish', () => {
+		testFn()
+		.pipe(istanbul.writeReports({
+			reporters: ['text', 'text-summary', 'json', 'html', 'lcov']
+		}))
+	});
+});
