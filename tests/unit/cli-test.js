@@ -1,4 +1,4 @@
-import cli from '../../src-es6/cli';
+import cli from '../../src/cli';
 import chai from 'chai';
 
 const { expect } = chai;

@@ -18,9 +18,9 @@ const {
   mocha,
 } = gulpLoadPlugins();
 
-const srcFilesPattern  = 'src-es6/**/*.js';
+const srcFilesPattern  = 'src/**/*.js';
 const testFilesPattern = 'tests/**/*.js';
-const jsTargetFolder   = 'src';
+const jsTargetFolder   = 'dist';
 
 gulp.task('clean', () => del([jsTargetFolder]));
 
