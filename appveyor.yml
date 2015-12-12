@@ -21,3 +21,7 @@ test_script:
   - node --version
   - npm --version
   - cmd: npm test
+
+cache:
+ - '%APPDATA%\npm-cache' 
+ - node_modules
