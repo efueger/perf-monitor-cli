@@ -18,4 +18,4 @@ exclude_paths:
 - gulpfile.babel.js
 - coverage/**/*
 - bin/*
-- src/**/*
+- dist/**/*
