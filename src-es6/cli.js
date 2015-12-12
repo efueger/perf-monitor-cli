@@ -1,9 +1,9 @@
-import Chrome from 'chrome-remote-interface';
+import chromeInterface from 'chrome-remote-interface';
 import util from 'util';
 import bunyan from 'bunyan';
 
 const logger = bunyan.createLogger({
-  name: 'perf-monitor'
+  name: 'perf-monitor',
 });
 
 const options = {
@@ -16,7 +16,7 @@ const options = {
       if (tab.url.indexOf('github.com') !== -1) {
         return index;
       }
-    }).filter(index => true);
+    }).filter(() => true);
 
     indexToReturn = matchingTabs[0];
     const matchingTab = tabs[indexToReturn];
@@ -24,26 +24,25 @@ const options = {
     if (matchingTabs.length > 1) {
       logger.log(`More than one tab found, using the tab with url: ${matchingTab.url}`);
     }
-     return indexToReturn;
-  }
+    return indexToReturn;
+  },
 };
 
-  Chrome(options, function(chrome) {
-    chrome.Network.requestWillBeSent(function (params) {
-      logger.log(util.inspect(params, { depth: null }));
-    });
-    chrome.Network.requestServedFromCache(function(requestId) {
-      logger.log(`Served from cache: ${requestId}`);
-    });
-    chrome.Network.responseReceived(function(params) {
-      logger.log(util.inspect(params, { depth: null }));
-    })
-    chrome.Network.setMonitoringXHREnabled(true);
-
-    //chrome.Page.loadEventFired(chrome.close);
-    chrome.Network.enable();
-    chrome.Page.enable();
-
-  }).on('error', function() {
-    logger.error('Cannot connect to Chrome');
+chromeInterface(options, (chrome) => {
+  chrome.Network.requestWillBeSent((params) => {
+    logger.log(util.inspect(params, { depth: null }));
   });
+  chrome.Network.requestServedFromCache((requestId) => {
+    logger.log(`Served from cache: ${requestId}`);
+  });
+  chrome.Network.responseReceived((params) => {
+    logger.log(util.inspect(params, { depth: null }));
+  });
+  chrome.Network.setMonitoringXHREnabled(true);
+
+  // chrome.Page.loadEventFired(chrome.close);
+  chrome.Network.enable();
+  chrome.Page.enable();
+}).on('error', () => {
+  logger.error('Cannot connect to Chrome');
+});
