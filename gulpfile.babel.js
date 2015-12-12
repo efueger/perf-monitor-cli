@@ -22,7 +22,7 @@ const srcFilesPattern  = 'src/**/*.js';
 const testFilesPattern = 'tests/**/*.js';
 const jsTargetFolder   = 'dist';
 
-gulp.task('clean', () => del([jsTargetFolder]));
+gulp.task('clean', () => del([jsTargetFolder, 'coverage']));
 
 gulp.task('lint', () => {
   return gulp.src([srcFilesPattern, testFilesPattern])
