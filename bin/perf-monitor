@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-var path = require('path');
-var fs   = require('fs');
-var src  = path.join(path.dirname(fs.realpathSync(__filename)), '../src');
+const path = require('path');
+const fs   = require('fs');
+const lib  = path.join(path.dirname(fs.realpathSync(__filename)), '../dist');
 
-require(src + '/cli');
+require(lib + '/cli');
