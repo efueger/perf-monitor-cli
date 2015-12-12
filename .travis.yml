@@ -3,7 +3,6 @@ compiler: clang-3.6
 node_js:
   - "4.2"
   - "5.2"
-sudo: false
 script: "gulp coverage"
 env:
   - CXX=clang-3.6
