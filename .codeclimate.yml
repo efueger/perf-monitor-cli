@@ -19,3 +19,6 @@ exclude_paths:
 - coverage/**/*
 - bin/*
 - dist/**/*
+- *.yml
+- *.md
+- *.json
