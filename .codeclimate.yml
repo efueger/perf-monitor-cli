@@ -19,6 +19,7 @@ exclude_paths:
 - coverage/**/*
 - bin/*
 - dist/**/*
-- "*.yml"
-- "*.md"
-- "*.json"
+- "appveyor.yml"
+- "README.md"
+- "perf-monitor.json"
+- ".codeclimate.yml"
