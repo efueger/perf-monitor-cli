@@ -19,6 +19,8 @@ exclude_paths:
 - coverage/**/*
 - bin/*
 - dist/**/*
+- "package.json"
+- "perf-monitor.json"
 - "appveyor.yml"
 - "README.md"
 - "perf-monitor.json"
