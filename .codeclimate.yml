@@ -7,6 +7,8 @@ engines:
       - javascript
   eslint:
     enabled: true
+  nodesecurity:
+    enabled: true
   fixme:
     enabled: true
 ratings:
@@ -19,9 +21,7 @@ exclude_paths:
 - coverage/**/*
 - bin/*
 - dist/**/*
-- "package.json"
-- "perf-monitor.json"
-- "appveyor.yml"
-- "README.md"
-- "perf-monitor.json"
-- ".codeclimate.yml"
+- "*.json"
+- "*.yml"
+- ".*.yml"
+- "*.md"
