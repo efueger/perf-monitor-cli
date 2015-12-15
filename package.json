@@ -18,7 +18,7 @@
     "url": "git+https://github.com/perf-site/perf-monitor-cli.git"
   },
   "author": "Sivakumar Kailasam",
-  "license": "MIT",
+  "license": "",
   "bugs": {
     "url": "https://github.com/perf-site/perf-monitor-cli/issues"
   },
